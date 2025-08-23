@@ -179,6 +179,7 @@ body {
     color: hsl(210, 5%, 41%);
     font-size: 1rem;
     margin-top: .33rem;
+    margin-bottom: 5px;
 }
 
 .card-text {

@@ -27,10 +27,11 @@
                             <h2 class="card-title">Weather</h2>
                         </div>
                         <div class="card-body">
-                            <p class="card-subtitle">Loading Soon</p>
-                            <p class="card-text">Loading...</p>
+                            <p class="card-subtitle">Enter a city to see local weather.</p>
+                            <label for="weather-city">City:</label>
+                            <input class="form-control" type="text" id="weather-city" placeholder="Please Enter City">
                             <div class="output" id="weather-output"></div>
-                            <button class="btn btn-primary btn-action" type="button">Get</button>
+                            <button class="btn btn-primary btn-action" type="button" id="weather-btn" aria-live="polite">Get Weather</button>
                         </div>
                     </div>
                 </section>
@@ -142,6 +143,6 @@
             </div>
         </section>
     </div>
-    
+    <script src="script.js"></script>
 </body>
 </html>
