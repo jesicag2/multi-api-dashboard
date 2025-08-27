@@ -7,7 +7,6 @@ const weatherOutput = document.getElementById("weather-output");
 // Loading state
 function renderWeatherLoading() {
     weatherOutput.textContent = 'Fetching weather...';
-    weatherOutput.setAttribute('aria-busy', 'true');
 }
 
 async function handleGetWeather() {
@@ -28,7 +27,6 @@ async function handleGetWeather() {
     if (location === null) {
         weatherOutput.textContent = "City not found.";
         weatherBtn.disabled = false;
-        weatherOutput.setAttribute('aria-busy', 'false');
         return;
     } weatherOutput.textContent = `Found: ${location.name}, ${location.country}...`; 
 
@@ -37,7 +35,6 @@ async function handleGetWeather() {
     if (!forecast) {
         weatherOutput.textContent = "Could not fetch weather data. Try again.";
         weatherBtn.disabled = false;
-        weatherOutput.setAttribute('aria-busy', 'false');
         return;
     }
     renderWeatherSuccess(location, forecast);
@@ -110,8 +107,6 @@ function renderWeatherSuccess(location, forecast) {
         <p><strong>Today: </strong>High: ${high}°F / Low ${low}°F</p>
         <p>Updated at ${updatedLabel}. <span aria-label="Data source">ⓘ Data from Open-Meteo</span></p>
     `;
-
-    weatherOutput.setAttribute('aria-busy', 'false');
 }
 
 weatherBtn.addEventListener("click", handleGetWeather)
