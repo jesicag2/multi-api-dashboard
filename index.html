@@ -42,10 +42,32 @@
                             <h2 class="card-title">Currency</h2>
                         </div>
                         <div class="card-body">
-                            <p class="card-subtitle">Loading Soon</p>
-                            <p class="card-text">Loading...</p>
-                            <div class="output" id="currency-output"></div>
-                            <button class="btn btn-primary btn-action" type="button">Get</button>
+                            <p class="card-subtitle">Check exchange rates:</p>
+                            <input class="form-control" type="number" id="currency-amount" min="0" step="0.01" placeholder="e.g., $7.99">
+                            <div class="currency-select-row">
+                                <label for="currency-from">From</label>
+                                <select id="currency-from" name="currency" size="1">
+                                    <option value="USD" selected>USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="MXN">MXN</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="BTC">BTC</option>
+                                </select>
+                                <label for="currency-to">To</label>
+                                <select id="currency-to" name="currency" size="1">
+                                    <option value="EUR" selected>EUR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="MXN">MXN</option>
+                                    <option value="JPY">JPY</option>
+                                    <option value="BTC">BTC</option>
+                                </select>
+                            </div>
+                            <div class="output" id="currency-output" aria-live="polite"></div>
+                            <button class="btn btn-primary btn-action" type="button" id="currency-btn" aria-live="polite">Convert</button>
                         </div>
                     </div>
                 </section>
