@@ -118,6 +118,7 @@ async function handleGetRates() {
     const userAmount = parseFloat(currencyAmount.value);
     const userFrom = currencyFrom.value;
     const userTo = currencyTo.value;
+
     if (!Number.isFinite(userAmount) || userAmount <= 0) {
         currencyOutput.textContent = "Please enter a valid amount, greater than 0.";
         return;
@@ -134,21 +135,46 @@ async function handleGetRates() {
     // call fetch rates function
     const conversion = await fetchRates(userFrom, userTo);
 
-    // if null -- couldnt fetch rates try again; reenable button
+    if (!conversion) {
+        currencyOutput.textContent = "Could not fetch exchange rates. Try Again.";
+        currencyBtn.disabled = false;
+        return
+    }
 
-    // else convert .. unless api converts already
+    // else convert user Amount
 
     // call render success output function
     // reenable buton
 }
 
-function fetchRates(from, to) {
+async function fetchRates(from, to) {
+    try {
+        const response = await fetch(`https://api.vatcomply.com/rates?base=${from}`)
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        if (!data || !data.rates) {
+            return null; 
+        } 
+        const rate = data.rates[to]
+        
+        if (typeof rate !== "number"){
+            return null
+        } else {
+            return {rate: rate, date: data.date, source: 'VATComply'}
+        }
+    } catch (error) {
+        console.error("Rates fetch failed:", error);
+        return null;
+    }
 }
 
 function renderRatesSuccess(result) {
 
 }
-// https://api.vatcomply.com/rates?base=EUR
+
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
