@@ -2,12 +2,13 @@ const weatherCity = document.getElementById("weather-city");
 const weatherBtn = document.getElementById("weather-btn");
 const weatherOutput = document.getElementById("weather-output");
 
-// Weather Card
+const currencyAmount = document.getElementById("currency-amount");
+const currencyFrom = document.getElementById("currency-from");
+const currencyTo = document.getElementById("currency-to");
+const currencyBtn = document.getElementById("currency-btn");
+const currencyOutput = document.getElementById("currency-output");
 
-// Loading state
-function renderWeatherLoading() {
-    weatherOutput.textContent = 'Fetching weather...';
-}
+// Weather Card
 
 async function handleGetWeather() {
     // check if user inputed something
@@ -17,9 +18,9 @@ async function handleGetWeather() {
         return;
     } 
 
-    // get weather data, disable button while waiting
+    // loading state: get weather data, disable button while waiting
     weatherBtn.disabled = true;
-    renderWeatherLoading();
+    weatherOutput.textContent = 'Fetching weather...';
 
     // geocode the city
     const location = await geocodeCity(userCity);
@@ -109,4 +110,45 @@ function renderWeatherSuccess(location, forecast) {
     `;
 }
 
-weatherBtn.addEventListener("click", handleGetWeather)
+
+// Currency Card
+
+async function handleGetRates() {
+    // check user inputs
+    const userAmount = parseFloat(currencyAmount.value);
+    const userFrom = currencyFrom.value;
+    const userTo = currencyTo.value;
+    if (!Number.isFinite(userAmount) || userAmount <= 0) {
+        currencyOutput.textContent = "Please enter a valid amount, greater than 0.";
+        return;
+    }
+    if (userFrom === userTo) {
+        currencyOutput.textContent = "Please choose two different currencies.";
+        return;
+    } 
+
+    // loading state: get currency data, disable button while waiting
+    currencyBtn.disabled = true;
+    currencyOutput.textContent = 'Converting currency...';
+
+    // call fetch rates function
+    const conversion = await fetchRates(userFrom, userTo);
+
+    // if null -- couldnt fetch rates try again; reenable button
+
+    // else convert .. unless api converts already
+
+    // call render success output function
+    // reenable buton
+}
+
+function fetchRates(from, to) {
+
+}
+
+function renderRatesSuccess(result) {
+
+}
+// https://api.vatcomply.com/rates?base=EUR
+weatherBtn.addEventListener("click", handleGetWeather);
+currencyBtn.addEventListener("click", handleGetRates);
