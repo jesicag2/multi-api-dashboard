@@ -231,9 +231,28 @@ async function fetchRandomDog() {
 }
 
 function renderDogSuccess(url) {
+    dogOutput.textContent = "";
 
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "Random dog image"
+    img.style.maxWidth = "100%";
+    img.style.borderRadius = "0.5rem";
+
+    const p = document.createElement("p");
+    const small = document.createElement("small");
+    const span = document.createElement("span");
+    span.setAttribute("aria-label", "Date source");
+    span.textContent = "ⓘ Random Dog";
+
+    small.appendChild(span);
+    p.appendChild(small);
+
+    dogOutput.appendChild(img);
+    dogOutput.appendChild(p);
 }
 
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
+dogBtn.addEventListener("click", handleGetDog);
