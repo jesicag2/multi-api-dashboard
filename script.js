@@ -200,22 +200,37 @@ async function handleGetDog() {
     dogOutput.textContent = "Fetching doggie image...";
 
     // fetch image
-    const image = await fetchRandomDog();
-    if (!image) {
-        weatherOutput.textContent = "Could not fetch doggie image. Try again.";
+    const imageURL = await fetchRandomDog();
+    if (!imageURL) {
+        dogOutput.textContent = "Could not fetch doggie image. Try again.";
         dogBtn.disabled = false;
         return;
     }
 
-    renderDogSuccess();
+    renderDogSuccess(imageURL);
     dogBtn.disabled = false; 
 }
 
 async function fetchRandomDog() {
+    try {
+        const response = await fetch ('https://random.dog/woof.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
 
+        if (!data || !data.url) {
+            return null;
+        } else {
+            return data.url
+        }
+    } catch (error) {
+        console.error("Image fetch failed:", error);
+        return null;
+    }
 }
 
-function renderDogSuccess() {
+function renderDogSuccess(url) {
 
 }
 
