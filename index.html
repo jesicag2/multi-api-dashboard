@@ -20,7 +20,7 @@
         <!-- aria-labelledby="title" -->
             <div class="grid-container">
 
-                <!-- 1 -->
+                <!-- 1: Weather -->
                 <section class="grid-item">
                     <div class="card">
                         <div class="card-head">
@@ -35,7 +35,7 @@
                     </div>
                 </section>
     
-                <!-- 2 -->
+                <!-- 2: Currency -->
                 <section class="grid-item">
                     <div class="card">
                         <div class="card-head">
@@ -72,7 +72,7 @@
                     </div>
                 </section>
     
-                <!-- 3 -->
+                <!-- 3: GitHub -->
                 <section class="grid-item">
                     <div class="card">
                         <div class="card-head">
@@ -87,17 +87,16 @@
                     </div>
                 </section>
     
-                <!-- 4 -->
+                <!-- 4: Dog -->
                 <section class="grid-item">
                     <div class="card">
                         <div class="card-head">
                             <h2 class="card-title">Random Dog</h2>
                         </div>
                         <div class="card-body">
-                            <p class="card-subtitle">Loading Soon</p>
-                            <p class="card-text">Loading...</p>
-                            <div class="output" id="dog-output"></div>
-                            <button class="btn btn-primary btn-action" type="button">Get</button>
+                            <p class="card-subtitle">Click to see cute dog picture:</p>
+                            <div class="output" id="dog-output" aria-live="polite"></div>
+                            <button class="btn btn-primary btn-action" type="button" id="dog-btn" aria-live="polite">Get Doggie</button>
                         </div>
                     </div>
                 </section>

@@ -8,6 +8,9 @@ const currencyTo = document.getElementById("currency-to");
 const currencyBtn = document.getElementById("currency-btn");
 const currencyOutput = document.getElementById("currency-output");
 
+const dogBtn = document.getElementById("dog-btn");
+const dogOutput = document.getElementById("dog-output")
+
 // Weather Card
 
 async function handleGetWeather() {
@@ -183,8 +186,16 @@ function renderRatesSuccess(amount, from, to, rate, converted, date, source) {
     currencyOutput.innerHTML = `
         <p><strong>Result: </strong>${amount} ${from} = ${converted} ${to}</p>
         <p><small><strong>Exchange Rate: </strong> 1 ${from} = ${rate} ${to} · As of ${date} · <span aria-label="Data source">ⓘ ${source}</span></small></p>
-    `
+    `;
 }
+
+// GitHub Card
+
+
+// Dog Card
+
+
+
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
