@@ -236,8 +236,6 @@ function renderDogSuccess(url) {
     const img = document.createElement("img");
     img.src = url;
     img.alt = "Random dog image"
-    img.style.maxWidth = "100%";
-    img.style.borderRadius = "0.5rem";
 
     const p = document.createElement("p");
     const small = document.createElement("small");

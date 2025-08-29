@@ -299,3 +299,13 @@ input[type="text"]:focus, input[type="search"]:focus, input[type="number"]:focus
     flex: 1;
     max-width: 120px;
 }
+
+/* image */
+.output img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 200px;
+    border-radius: 0.5rem;
+}
