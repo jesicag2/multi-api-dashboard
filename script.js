@@ -218,11 +218,17 @@ async function fetchRandomDog() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        const url = data.url;
 
-        if (!data || !data.url) {
+        if (!url) {
+            return null;
+        }
+        
+        const lowerURL = url.toLowerCase();
+        if (lowerURL.endsWith(".mp4") || lowerURL.endsWith(".webm") || lowerURL.endsWith(".mov")) {
             return null;
         } else {
-            return data.url
+            return url;
         }
     } catch (error) {
         console.error("Image fetch failed:", error);
