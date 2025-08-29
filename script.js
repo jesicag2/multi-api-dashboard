@@ -194,7 +194,30 @@ function renderRatesSuccess(amount, from, to, rate, converted, date, source) {
 
 // Dog Card
 
+async function handleGetDog() {
+    // loading state: get image, disable btn
+    dogBtn.disabled = true;
+    dogOutput.textContent = "Fetching doggie image...";
 
+    // fetch image
+    const image = await fetchRandomDog();
+    if (!image) {
+        weatherOutput.textContent = "Could not fetch doggie image. Try again.";
+        dogBtn.disabled = false;
+        return;
+    }
+
+    renderDogSuccess();
+    dogBtn.disabled = false; 
+}
+
+async function fetchRandomDog() {
+
+}
+
+function renderDogSuccess() {
+
+}
 
 
 weatherBtn.addEventListener("click", handleGetWeather);
