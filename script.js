@@ -106,7 +106,7 @@ function renderWeatherSuccess(location, forecast) {
         <p><strong>Current: </strong>${current}°F</p>
         <p><strong>Feels Like: </strong>${feels}°F</p>
         <p><strong>Today: </strong>High: ${high}°F / Low ${low}°F</p>
-        <p>Updated at ${updatedLabel}. <span aria-label="Data source">ⓘ Data from Open-Meteo</span></p>
+        <p><small>Updated at ${updatedLabel}. <span aria-label="Data source">ⓘ Open-Meteo</span></small></p>
     `;
 }
 
@@ -136,17 +136,21 @@ async function handleGetRates() {
     const conversion = await fetchRates(userFrom, userTo);
 
     if (!conversion) {
-        currencyOutput.textContent = "Could not fetch exchange rates. Try Again.";
+        currencyOutput.textContent = "Could not fetch exchange rates. Try again.";
         currencyBtn.disabled = false;
         return
     }
 
-    // else convert user Amount
+    // compute the exchange rate
+    const converted = (userAmount * conversion.rate).toFixed(2);
+    const amount = userAmount.toFixed(2);
+    const rate = conversion.rate.toFixed(4);
 
-    // call render success output function
-    // reenable buton
+    renderRatesSuccess(amount, userFrom, userTo, rate, converted, conversion.date, conversion.source);
+    currencyBtn.disabled = false;
 }
 
+// Gets conversion rates
 async function fetchRates(from, to) {
     try {
         const response = await fetch(`https://api.vatcomply.com/rates?base=${from}`)
@@ -172,8 +176,14 @@ async function fetchRates(from, to) {
     }
 }
 
-function renderRatesSuccess(result) {
+// Display content fetched
+function renderRatesSuccess(amount, from, to, rate, converted, date, source) {
+    currencyOutput.textContent = "";
 
+    currencyOutput.innerHTML = `
+        <p><strong>Result: </strong>${amount} ${from} = ${converted} ${to}</p>
+        <p><small><strong>Exchange Rate: </strong> 1 ${from} = ${rate} ${to} · As of ${date} · <span aria-label="Data source">ⓘ ${source}</span></small></p>
+    `
 }
 
 weatherBtn.addEventListener("click", handleGetWeather);
