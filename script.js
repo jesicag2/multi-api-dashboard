@@ -8,8 +8,12 @@ const currencyTo = document.getElementById("currency-to");
 const currencyBtn = document.getElementById("currency-btn");
 const currencyOutput = document.getElementById("currency-output");
 
+const githubUser = document.getElementById("github-user");
+const githubBtn = document.getElementById("github-btn");
+const githubOutput = document.getElementById("github-output");
+
 const dogBtn = document.getElementById("dog-btn");
-const dogOutput = document.getElementById("dog-output")
+const dogOutput = document.getElementById("dog-output");
 
 // Weather Card
 
@@ -190,6 +194,21 @@ function renderRatesSuccess(amount, from, to, rate, converted, date, source) {
 }
 
 // GitHub Card
+
+async function handleGetGitHub() {
+    const userProfile = githubUser.value.trim();
+    if (userProfile === "") {
+        githubOutput.textContent = "Please enter a user profile name.";
+        return;
+    }
+
+    // loading state: 
+    githubBtn.disabled = true;
+    githubOutput.textContent = 'Fetching user...';
+
+    // fetch user
+
+}
 
 
 // Dog Card
