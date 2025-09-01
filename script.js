@@ -207,9 +207,55 @@ async function handleGetGitHub() {
     githubOutput.textContent = 'Fetching user...';
 
     // fetch user
+    const ghProfile = await fetchGitHubUser(userProfile);
+    if (ghProfile?.notFound) {
+        githubOutput.textContent = "User not found."
+        githubBtn.disabled = false;
+        return;
+    }
+    else if (!ghProfile) {
+        githubOutput.textContent = "Could not fetch GitHub user data. Try again.";
+        githubBtn.disabled = false;
+        return;
+    }
 
+    renderGitHubSuccess(ghProfile);
+    githubBtn.disabled = false;
 }
 
+async function fetchGitHubUser(username) {
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}`);
+
+        if (response.status === 404) {
+            return {notFound: true}; 
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        const login = data.login;
+        const name = data.name;
+        const avatarUrl = data.avatar_url;
+        const htmlUrl = data.html_url;
+        const bio = data.bio;
+        const repos = data.public_repos;
+
+        if (!login) {
+            return null;
+        }else {
+            return {login, name, avatarUrl, htmlUrl, bio, repos}
+        }
+    } catch (error) {
+        console.error("GitHub user fetch failed:", error);
+        return null;
+    }
+}
+
+function renderGitHubSuccess() {
+
+}
 
 // Dog Card
 
