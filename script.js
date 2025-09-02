@@ -443,7 +443,7 @@ async function handleGetDefinition() {
 
     // loading state
     dictBtn.disabled = true;
-    dictOutput.textContent = 'Fetching definiton...';
+    dictOutput.textContent = 'Fetching definition...';
 
     // fetch definition
     const definition = await fetchDefinition(userWord);
@@ -458,6 +458,8 @@ async function handleGetDefinition() {
         return;
     }
 
+    renderDefinitionSuccess(definition);
+    dictBtn.disabled = false;
 }
 
 // Get definition
@@ -472,27 +474,65 @@ async function fetchDefinition(userWord) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        const entry = data[0];
 
-        const word = data[0].word;
-        const partOfSpeech = data[0].meanings[0].partOfSpeech;
-        const definition = data[0].meanings[0].definitions[0].definition;
-        const partOfSpeech2 = data[0].meanings[1].partOfSpeech;
-        const definition2 = data[0].meanings[1].definitions[0].definition;
-
-        if (!data) {
+        if (!entry || !Array.isArray(entry.meanings) || entry.meanings.length === 0) {
             return null;
-        } else {
-            return {word, partOfSpeech, definition, partOfSpeech2, definition2};
         }
+
+        const word = entry.word;
+        const partOfSpeech = entry.meanings[0].partOfSpeech;
+        const definition = entry.meanings[0].definitions[0]?.definition;
+        const partOfSpeech2 = entry.meanings[1]?.partOfSpeech;
+        const definition2 = entry.meanings[1]?.definitions[0]?.definition;
+
+        return {word, partOfSpeech, definition, partOfSpeech2, definition2};
     } catch (error) {
-        console.error("Definition user fetch failed:", error);
+        console.error("Definition fetch failed:", error);
         return null;
     }
 }
 
 // Display definition
 function renderDefinitionSuccess(entry) {
+    const { word, partOfSpeech, definition, partOfSpeech2, definition2 } = entry;
 
+    dictOutput.textContent = "";
+
+    const p1 = document.createElement("p");
+    const boldP1 = document.createElement("strong");
+    boldP1.textContent = word;
+    p1.appendChild(boldP1);
+    dictOutput.appendChild(p1);
+
+    const p2 = document.createElement("p");
+    const boldP2 = document.createElement("strong");
+    if (partOfSpeech) {
+        boldP2.textContent = `${partOfSpeech}: `;
+    } else {
+        boldP2.textContent = "Definition: ";
+    }
+    p2.appendChild(boldP2);
+    p2.appendChild(document.createTextNode(definition));
+    dictOutput.appendChild(p2);
+
+    if (partOfSpeech2 && definition2) {
+        const p3 = document.createElement("p");
+        const boldP3 = document.createElement("strong");
+        boldP3.textContent = partOfSpeech2 + ": ";
+        p3.appendChild(boldP3);
+        p3.appendChild(document.createTextNode(definition2));
+        dictOutput.appendChild(p3);
+    }
+
+    const source = document.createElement("p");
+    const small = document.createElement("small");
+    const span = document.createElement("span");
+    span.setAttribute("aria-label", "Data source");
+    span.textContent = "ⓘ DictionaryAPI";
+    small.appendChild(span);
+    source.appendChild(small);
+    dictOutput.appendChild(source);
 }
 
 weatherBtn.addEventListener("click", handleGetWeather);
