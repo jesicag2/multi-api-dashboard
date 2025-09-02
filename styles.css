@@ -28,6 +28,10 @@ body {
     margin: 0;
 }
 
+p {
+    margin-top: 2px;
+}
+
 /* title */
 .title-bar {
     position: sticky;

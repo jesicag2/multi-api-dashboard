@@ -176,9 +176,9 @@ async function fetchRates(from, to) {
         const rate = data.rates[to]
         
         if (typeof rate !== "number"){
-            return null
+            return null;
         } else {
-            return {rate: rate, date: data.date, source: 'VATComply'}
+            return {rate: rate, date: data.date, source: 'VATComply'};
         }
     } catch (error) {
         console.error("Rates fetch failed:", error);
@@ -249,7 +249,7 @@ async function fetchGitHubUser(username) {
         if (!login) {
             return null;
         }else {
-            return {login, name, avatarUrl, htmlUrl, bio, repos}
+            return {login, name, avatarUrl, htmlUrl, bio, repos};
         }
     } catch (error) {
         console.error("GitHub user fetch failed:", error);
@@ -399,7 +399,7 @@ async function fetchJoke() {
         if (!data) {
             return null;
         } else {
-            return {setup, punchline}
+            return {setup, punchline};
         }
 
     } catch (error) {
@@ -409,7 +409,15 @@ async function fetchJoke() {
 }
 
 function renderJokeSuccess(joke) {
+    const { setup, punchline } = joke;
+    
+    jokeOutput.textContent = "";
 
+    jokeOutput.innerHTML = `
+        <p><strong>${setup}</strong></p>
+        <p>✨${punchline}✨</p>
+        <p><small><span aria-label="Data source">ⓘ Official API Joke</span></small></p>
+    `;
 }
 
 weatherBtn.addEventListener("click", handleGetWeather);
