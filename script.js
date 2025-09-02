@@ -253,8 +253,48 @@ async function fetchGitHubUser(username) {
     }
 }
 
-function renderGitHubSuccess() {
+function renderGitHubSuccess(profile) {
+    const { login, name, avatarUrl, htmlUrl, bio, repos } = profile;
 
+    githubOutput.textContent = "";
+
+    // image
+    const img = document.createElement("img");
+    img.src = avatarUrl;
+    img.alt = "User Image";
+    img.classList.add("img-circle");
+    githubOutput.appendChild(img);
+
+    // display name
+    const pName = document.createElement("p");
+    const bold = document.createElement("strong");
+    if (!name) {
+        bold.textContent = `@${login}`;
+    } else {
+        bold.textContent = `${name} - @${login}`;
+    }
+    pName.appendChild(bold) 
+    githubOutput.appendChild(pName);
+
+    // bio
+    if (bio) {
+        const pBio = document.createElement("p");
+        pBio.textContent = bio;
+        pBio.classList.add("bio");
+        githubOutput.appendChild(pBio);
+    }
+
+    // stats
+    const pStats = document.createElement("p");
+    pStats.textContent = `Public repos: ${repos}`;
+    githubOutput.appendChild(pStats);
+
+    // link
+    const a = document.createElement("a");
+    a.text = "View Profile";
+    a.href = htmlUrl;
+    a.target = "_blank";
+    githubOutput.appendChild(a);
 }
 
 // Dog Card
@@ -306,7 +346,7 @@ function renderDogSuccess(url) {
 
     const img = document.createElement("img");
     img.src = url;
-    img.alt = "Random dog image"
+    img.alt = "Random dog image";
 
     const p = document.createElement("p");
     const small = document.createElement("small");
@@ -324,4 +364,5 @@ function renderDogSuccess(url) {
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
+githubBtn.addEventListener("click", handleGetGitHub);
 dogBtn.addEventListener("click", handleGetDog);
