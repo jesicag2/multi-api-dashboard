@@ -446,13 +446,48 @@ async function handleGetDefinition() {
     dictOutput.textContent = 'Fetching definiton...';
 
     // fetch definition
-    const word = await fetchDefinition(userWord);
-    
+    const definition = await fetchDefinition(userWord);
+    if (definition?.notFound) {
+        dictOutput.textContent = "Word not found."
+        dictBtn.disabled = false;
+        return;
+    }
+    else if (!definition) {
+        dictOutput.textContent = "Could not fetch definition data. Try again.";
+        dictBtn.disabled = false;
+        return;
+    }
+
 }
 
 // Get definition
-async function fetchDefinition(word) {
+async function fetchDefinition(userWord) {
+    try {
+        const response = await fetch (`https://api.dictionaryapi.dev/api/v2/entries/en/${userWord}`);
 
+        if (response.status === 404) {
+            return {notFound: true}; 
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        const word = data[0].word;
+        const partOfSpeech = data[0].meanings[0].partOfSpeech;
+        const definition = data[0].meanings[0].definitions[0].definition;
+        const partOfSpeech2 = data[0].meanings[1].partOfSpeech;
+        const definition2 = data[0].meanings[1].definitions[0].definition;
+
+        if (!data) {
+            return null;
+        } else {
+            return {word, partOfSpeech, definition, partOfSpeech2, definition2};
+        }
+    } catch (error) {
+        console.error("Definition user fetch failed:", error);
+        return null;
+    }
 }
 
 // Display definition
@@ -465,3 +500,4 @@ currencyBtn.addEventListener("click", handleGetRates);
 githubBtn.addEventListener("click", handleGetGitHub);
 dogBtn.addEventListener("click", handleGetDog);
 jokeBtn.addEventListener("click", handleGetjoke);
+dictBtn.addEventListener("click", handleGetDefinition);
