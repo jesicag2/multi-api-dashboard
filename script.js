@@ -321,6 +321,7 @@ async function handleGetDog() {
     dogBtn.disabled = false; 
 }
 
+// Gets dog image
 async function fetchRandomDog() {
     try {
         const response = await fetch ('https://random.dog/woof.json');
@@ -346,6 +347,7 @@ async function fetchRandomDog() {
     }
 }
 
+// Displays dog image
 function renderDogSuccess(url) {
     dogOutput.textContent = "";
 
@@ -385,6 +387,7 @@ async function handleGetjoke() {
     jokeBtn.disabled = false;
 }
 
+// Gets joke
 async function fetchJoke() {
     try {
         const response = await fetch ('https://official-joke-api.appspot.com/random_joke');
@@ -408,6 +411,7 @@ async function fetchJoke() {
     }
 }
 
+// Displays joke
 function renderJokeSuccess(joke) {
     const { setup, punchline } = joke;
     
