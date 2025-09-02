@@ -386,7 +386,26 @@ async function handleGetjoke() {
 }
 
 async function fetchJoke() {
+    try {
+        const response = await fetch ('https://official-joke-api.appspot.com/random_joke');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
 
+        const setup = data.setup;
+        const punchline = data.punchline;
+
+        if (!data) {
+            return null;
+        } else {
+            return {setup, punchline}
+        }
+
+    } catch (error) {
+        console.error("Joke fetch failed:", error);
+        return null;
+    }
 }
 
 function renderJokeSuccess(joke) {
