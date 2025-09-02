@@ -199,10 +199,13 @@ function renderRatesSuccess(amount, from, to, rate, converted, date, source) {
 // GitHub Card
 
 async function handleGetGitHub() {
-    const userProfile = githubUser.value.trim();
+    let userProfile = githubUser.value.trim();
     if (userProfile === "") {
-        githubOutput.textContent = "Please enter a user profile name.";
+        githubOutput.textContent = "Please enter a username.";
         return;
+    }
+    if (userProfile.startsWith("@")) {
+        userProfile = userProfile.slice(1);
     }
 
     // loading state: 
@@ -296,9 +299,10 @@ function renderGitHubSuccess(profile) {
 
     // link
     const a = document.createElement("a");
-    a.text = "View Profile";
+    a.text = "View profile";
     a.href = htmlUrl;
     a.target = "_blank";
+    a.rel = "noopener noreferrer";
     githubOutput.appendChild(a);
 }
 
