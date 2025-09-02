@@ -15,6 +15,9 @@ const githubOutput = document.getElementById("github-output");
 const dogBtn = document.getElementById("dog-btn");
 const dogOutput = document.getElementById("dog-output");
 
+const jokeBtn = document.getElementById("joke-btn");
+const jokeOutput = document.getElementById("joke-output");
+
 // Weather Card
 
 async function handleGetWeather() {
@@ -363,8 +366,35 @@ function renderDogSuccess(url) {
     dogOutput.appendChild(p);
 }
 
+// Joke Card
+
+async function handleGetjoke() {
+    // loading state:
+    jokeBtn.disabled = true;
+    jokeOutput.textContent = "Fetching joke...";
+
+    // fetch joke
+    const joke = await fetchJoke();
+    if (!joke) {
+        jokeOutput.textContent = "Could not fetch joke. Try again.";
+        jokeBtn.disabled = false;
+        return;
+    }
+
+    renderJokeSuccess(joke);
+    jokeBtn.disabled = false;
+}
+
+async function fetchJoke() {
+
+}
+
+function renderJokeSuccess(joke) {
+
+}
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
 githubBtn.addEventListener("click", handleGetGitHub);
 dogBtn.addEventListener("click", handleGetDog);
+jokeBtn.addEventListener("click", handleGetjoke);
