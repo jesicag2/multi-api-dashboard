@@ -18,6 +18,10 @@ const dogOutput = document.getElementById("dog-output");
 const jokeBtn = document.getElementById("joke-btn");
 const jokeOutput = document.getElementById("joke-output");
 
+const dictWord = document.getElementById("dictionary-word");
+const dictBtn = document.getElementById("dictionary-btn");
+const dictOutput = document.getElementById("dictionary-output");
+
 // Weather Card
 
 async function handleGetWeather() {
@@ -426,6 +430,34 @@ function renderJokeSuccess(joke) {
         <p>✨${punchline}✨</p>
         <p><small><span aria-label="Data source">ⓘ Official API Joke</span></small></p>
     `;
+}
+
+// Dictionary Card
+
+async function handleGetDefinition() {
+    const userWord = dictWord.value.trim();
+    if (userWord === "") {
+        dictOutput.textContent = "Please enter a word.";
+        return;
+    }
+
+    // loading state
+    dictBtn.disabled = true;
+    dictOutput.textContent = 'Fetching definiton...';
+
+    // fetch definition
+    const word = await fetchDefinition(userWord);
+    
+}
+
+// Get definition
+async function fetchDefinition(word) {
+
+}
+
+// Display definition
+function renderDefinitionSuccess(entry) {
+
 }
 
 weatherBtn.addEventListener("click", handleGetWeather);
