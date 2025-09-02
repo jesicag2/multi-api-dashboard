@@ -223,6 +223,7 @@ async function handleGetGitHub() {
     githubBtn.disabled = false;
 }
 
+// Gets GitHub user information
 async function fetchGitHubUser(username) {
     try {
         const response = await fetch(`https://api.github.com/users/${username}`);
@@ -253,6 +254,7 @@ async function fetchGitHubUser(username) {
     }
 }
 
+// Displays content fetched
 function renderGitHubSuccess(profile) {
     const { login, name, avatarUrl, htmlUrl, bio, repos } = profile;
 
