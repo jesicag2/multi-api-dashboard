@@ -22,6 +22,10 @@ const dictWord = document.getElementById("dictionary-word");
 const dictBtn = document.getElementById("dictionary-btn");
 const dictOutput = document.getElementById("dictionary-output");
 
+const animeTitle = document.getElementById("anime-title");
+const animeBtn = document.getElementById("anime-btn");
+const animeOutput = document.getElementById("anime-output");
+
 // Weather Card
 
 async function handleGetWeather() {
@@ -534,6 +538,30 @@ function renderDefinitionSuccess(entry) {
     source.appendChild(small);
     dictOutput.appendChild(source);
 }
+
+// Anime Card
+
+async function handleGetAnime() {
+    const userTitle = animeTitle.value.trim();
+    if (userTitle === "") {
+        animeOutput.textContent = "Please enter a anime title."
+        return;
+    }
+
+    // loading state
+    animeBtn.disabled = true;
+    animeOutput.textContent = 'Fetching anime information...';
+
+    // fetch anime
+    const details = await fetchAnime(userTitle);
+}
+
+// Gets details
+async function fetchAnime(title) {
+
+}
+
+// Displays information
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
