@@ -586,8 +586,9 @@ async function fetchAnime(animeTitle) {
         const imageUrl = data.data[0].images.jpg.image_url;
         const synopsis = data.data[0].synopsis;
         const score = data.data[0].score;
+        const url = data.data[0].url
 
-        return {title, imageUrl, synopsis, score}
+        return {title, imageUrl, synopsis, score, url}
     } catch (error) {
         console.error("Anime fetch failed:", error);
         return null;
@@ -596,7 +597,51 @@ async function fetchAnime(animeTitle) {
 
 // Displays information
 function renderAnimeSuccess(anime) {
-    animeOutput.textContent = anime;
+    const { title, imageUrl, synopsis, score, url } = anime
+    animeOutput.textContent = "";
+
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.alt = `Poster for ${title}`;
+    img.referrerPolicy = "no-referrer";
+    animeOutput.appendChild(img);
+
+    const pTitle = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = title;
+    pTitle.appendChild(strong);
+    animeOutput.appendChild(pTitle);
+
+    if (typeof score === "number") {
+        const pScore = document.createElement("p");
+        pScore.textContent = `Score: ${score}/10`;
+        animeOutput.appendChild(pScore);
+    }
+
+    if (synopsis) {
+        const pSynopsis = document.createElement("p");
+        pSynopsis.textContent = synopsis;
+        pSynopsis.classList.add("synopsis");
+        animeOutput.appendChild(pSynopsis);
+    }
+
+    if (url) {
+        const a = document.createElement("a");
+        a.text = "More Info"
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        animeOutput.appendChild(a);
+    }
+
+    const source = document.createElement("p");
+    const small = document.createElement("small");
+    const span = document.createElement("span");
+    span.setAttribute("aria-label", "Data source");
+    span.textContent = "ⓘ MyAnimeList via Jikan";
+    small.appendChild(span);
+    source.appendChild(small);
+    animeOutput.appendChild(source);
 }
 
 weatherBtn.addEventListener("click", handleGetWeather);
