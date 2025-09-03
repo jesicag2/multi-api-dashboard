@@ -544,7 +544,7 @@ function renderDefinitionSuccess(entry) {
 async function handleGetAnime() {
     const userTitle = animeTitle.value.trim();
     if (userTitle === "") {
-        animeOutput.textContent = "Please enter a anime title."
+        animeOutput.textContent = "Please enter an anime title."
         return;
     }
 
@@ -554,14 +554,50 @@ async function handleGetAnime() {
 
     // fetch anime
     const details = await fetchAnime(userTitle);
+    if (details?.notFound) {
+        animeOutput.textContent = "Anime not found."
+        animeBtn.disabled = false;
+        return;
+    }
+    else if (!details) {
+        animeOutput.textContent = "Could not fetch anime data. Try again."
+        animeBtn.disabled = false;
+        return;
+    }
+
+    renderAnimeSuccess(details);
+    animeBtn.disabled = false;
 }
 
 // Gets details
-async function fetchAnime(title) {
+async function fetchAnime(animeTitle) {
+    try {
+        const response = await fetch (`https://api.jikan.moe/v4/anime?q=${animeTitle}&limit=1&sfw=true`);
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.data.length === 0) {
+            return {notFound: true}; 
+        }
+
+        const title = data.data[0].title;
+        const imageUrl = data.data[0].images.jpg.image_url;
+        const synopsis = data.data[0].synopsis;
+        const score = data.data[0].score;
+
+        return {title, imageUrl, synopsis, score}
+    } catch (error) {
+        console.error("Anime fetch failed:", error);
+        return null;
+    }
 }
 
 // Displays information
+function renderAnimeSuccess(anime) {
+    animeOutput.textContent = anime;
+}
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
@@ -569,3 +605,4 @@ githubBtn.addEventListener("click", handleGetGitHub);
 dogBtn.addEventListener("click", handleGetDog);
 jokeBtn.addEventListener("click", handleGetjoke);
 dictBtn.addEventListener("click", handleGetDefinition);
+animeBtn.addEventListener("click", handleGetAnime)
