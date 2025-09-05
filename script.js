@@ -684,7 +684,8 @@ async function fetchNumberFact(type) {
             ? `https://api.allorigins.win/raw?url=http://numbersapi.com/random/${type}`
             : `http://numbersapi.com/random/${type}`;
 
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, { cache: 'no-store' });
+
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
