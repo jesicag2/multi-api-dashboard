@@ -5,7 +5,7 @@ This project is an interactive API Dashboard built with HTML, CSS, and JavaScrip
 
 The dashboard features eight functional cards, each fetching and displaying live data from a different public APIs. It emphasizes modular JavaScript (separating handler, fetcher, and renderer logic), accessibility (ARIA attributes, alt text, semantic structure), and responsive design.
 
-Check out live demo [here]().
+Check out live demo [here](https://multiapidash.netlify.app/).
 
 ## How to View the Project
 1. Download or clone the repository.
