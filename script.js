@@ -677,7 +677,18 @@ async function handleGetNumFact() {
 
 // Get fact
 async function fetchNumberFact(type) {
+    try {
+        const response = await fetch (`http://numbersapi.com/random/${type}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.text();
 
+        return {text: data, type};
+    } catch (error) {
+        console.error("Fact fetch failed:", error);
+        return null;
+    }
 }
 
 // Display fact
