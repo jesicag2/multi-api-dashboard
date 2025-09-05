@@ -145,17 +145,20 @@
                     </div>
                 </section>
     
-                <!-- 8 -->
+                <!-- 8: Numbers -->
                 <section class="grid-item">
                     <div class="card">
                         <div class="card-head">
-                            <h2 class="card-title">Coming Soon</h2>
+                            <h2 class="card-title">Digit Facts</h2>
                         </div>
                         <div class="card-body">
-                            <p class="card-subtitle">Loading Soon</p>
-                            <p class="card-text">Loading...</p>
-                            <div class="output" id="-output"></div>
-                            <button class="btn btn-primary btn-action" type="button">Get</button>
+                            <p class="card-subtitle">Get random trivia or math facts:</p>
+                            <select id="num-type" name="type" size="1">
+                                <option value="trivia" selected>Trivia</option>
+                                <option value="math">Math</option>
+                            </select>
+                            <div class="output" id="num-output" aria-live="polite"></div>
+                            <button class="btn btn-primary btn-action" type="button" id="num-btn" aria-live="polite">Get Fact</button>
                         </div>
                     </div>
                 </section>
