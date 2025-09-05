@@ -26,6 +26,10 @@ const animeTitle = document.getElementById("anime-title");
 const animeBtn = document.getElementById("anime-btn");
 const animeOutput = document.getElementById("anime-output");
 
+const numType = document.getElementById("num-type");
+const numBtn = document.getElementById("num-btn");
+const numOutput = document.getElementById("num-output");
+
 // Weather Card
 
 async function handleGetWeather() {
@@ -204,6 +208,7 @@ function renderRatesSuccess(amount, from, to, rate, converted, date, source) {
     `;
 }
 
+
 // GitHub Card
 
 async function handleGetGitHub() {
@@ -314,6 +319,7 @@ function renderGitHubSuccess(profile) {
     githubOutput.appendChild(a);
 }
 
+
 // Dog Card
 
 async function handleGetDog() {
@@ -380,6 +386,7 @@ function renderDogSuccess(url) {
     dogOutput.appendChild(p);
 }
 
+
 // Joke Card
 
 async function handleGetjoke() {
@@ -435,6 +442,7 @@ function renderJokeSuccess(joke) {
         <p><small><span aria-label="Data source">ⓘ Official API Joke</span></small></p>
     `;
 }
+
 
 // Dictionary Card
 
@@ -538,6 +546,7 @@ function renderDefinitionSuccess(entry) {
     source.appendChild(small);
     dictOutput.appendChild(source);
 }
+
 
 // Anime Card
 
@@ -643,6 +652,39 @@ function renderAnimeSuccess(anime) {
     source.appendChild(small);
     animeOutput.appendChild(source);
 }
+
+
+// Numbers Card
+
+async function handleGetNumFact() {
+    const userType = numType.value;
+
+    // loading state
+    numBtn.disabled = true;
+    numOutput.textContent = "Fetching fact...";
+
+    // fetch fact 
+    const fact = await fetchNumberFact(userType);
+    if(!fact) {
+        numOutput.textContent = "Could not fetch fact. Try again.";
+        numBtn.disabled = false;
+        return;
+    }
+
+    renderNumberFactSuccess(fact);
+    numBtn.disabled = true;
+}
+
+// Get fact
+async function fetchNumberFact(type) {
+
+}
+
+// Display fact
+function renderNumberFactSuccess() {
+
+}
+
 
 weatherBtn.addEventListener("click", handleGetWeather);
 currencyBtn.addEventListener("click", handleGetRates);
