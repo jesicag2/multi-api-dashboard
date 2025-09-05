@@ -672,13 +672,19 @@ async function handleGetNumFact() {
     }
 
     renderNumberFactSuccess(fact);
-    numBtn.disabled = true;
+    numBtn.disabled = false;
 }
 
 // Get fact
 async function fetchNumberFact(type) {
     try {
-        const response = await fetch (`http://numbersapi.com/random/${type}`);
+        // const response = await fetch (`http://numbersapi.com/random/${type}`);
+        const isHttps = location.protocol === "https:";
+        const endpoint = isHttps
+            ? `https://r.jina.ai/http://numbersapi.com/random/${type}` // HTTPS proxy
+            : `http://numbersapi.com/random/${type}`;
+
+        const response = await fetch(endpoint);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -692,8 +698,15 @@ async function fetchNumberFact(type) {
 }
 
 // Display fact
-function renderNumberFactSuccess() {
+function renderNumberFactSuccess(fact) {
+    const { text: data, type } = fact;
+    
+    numOutput.textContent = "";
 
+    numOutput.innerHTML = `
+        <p><strong>${type}: </strong>${data}</p>
+        <p><small><span aria-label="Data source">ⓘ NumbersAPI</span></small></p>
+    `;
 }
 
 
@@ -703,4 +716,5 @@ githubBtn.addEventListener("click", handleGetGitHub);
 dogBtn.addEventListener("click", handleGetDog);
 jokeBtn.addEventListener("click", handleGetjoke);
 dictBtn.addEventListener("click", handleGetDefinition);
-animeBtn.addEventListener("click", handleGetAnime)
+animeBtn.addEventListener("click", handleGetAnime);
+numBtn.addEventListener("click", handleGetNumFact);
