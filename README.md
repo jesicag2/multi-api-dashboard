@@ -1,4 +1,4 @@
-# HTML Project: JavaScript API Dashboard
+# API Dashboard
 
 ## Description
 This project is an interactive API Dashboard built with HTML, CSS, and JavaScript. This projext demonstrates proficiency in front-end web development and working with third-party APIs.
