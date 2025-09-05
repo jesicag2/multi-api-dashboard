@@ -681,7 +681,7 @@ async function fetchNumberFact(type) {
         // const response = await fetch (`http://numbersapi.com/random/${type}`);
         const isHttps = location.protocol === "https:";
         const endpoint = isHttps
-            ? `https://r.jina.ai/http://numbersapi.com/random/${type}` // HTTPS proxy
+            ? `https://api.allorigins.win/raw?url=http://numbersapi.com/random/${type}`
             : `http://numbersapi.com/random/${type}`;
 
         const response = await fetch(endpoint);
